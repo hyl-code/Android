@@ -24,28 +24,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.security.PublicKey;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private WordViewModel mWordViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    public static final int UPDATE_WORD_ACTIVITY_REQUEST_CODE = 2;
+
+    public static final String EXTRA_DATA_UPDATE_WORD = "extra_word_to_be_updated";
+    public static final String EXTRA_DATA_ID = "extra_data_id";
+
+    private WordViewModel mWordViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,NewWordActivity.class);
-                startActivityForResult(intent,NEW_WORD_ACTIVITY_REQUEST_CODE);
-            }
-        });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final WordListAdapter adapter = new WordListAdapter(this);
@@ -58,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@NonNull final List<Word> words){
                 //Update the cached copy of the words in the adapter.
                 adapter.setWords(words);
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,NewWordActivity.class);
+                startActivityForResult(intent,NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -82,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         helper.attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new WordListAdapter.ClickListener(){
+            @Override
+            public void onItemClick(View v,int position){
+                Word word = adapter.getWordAtPosition(position);
+                launchUpdateWordActivity(word);
+            }
+        });
     }
 
     @Override
@@ -101,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.clear_data) {
             // Add a toast just for confirmation
-            Toast.makeText(this,"Clearing the data...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,R.string.clear_data_toast_text,Toast.LENGTH_SHORT).show();
 
             // Delete the existing data
             mWordViewModel.deleteAll();
@@ -117,8 +132,24 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
             Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
             mWordViewModel.insert(word);
+        }else if(requestCode == UPDATE_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            String word_data = data.getStringExtra(NewWordActivity.EXTRA_REPLY);
+            int id = data.getIntExtra(NewWordActivity.EXTRA_REPLY_ID,-1);
+
+            if(id != -1){
+                mWordViewModel.update(new Word(id,word_data));
+            }else{
+                Toast.makeText(this,R.string.unable_to_update,Toast.LENGTH_LONG).show();
+            }
         }else{
-            Toast.makeText(getApplicationContext(),R.string.empty_not_saved,Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.empty_not_saved,Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void launchUpdateWordActivity(Word word){
+        Intent intent =  new Intent(this,NewWordActivity.class);
+        intent.putExtra(EXTRA_DATA_UPDATE_WORD,word.getWord());
+        intent.putExtra(EXTRA_DATA_ID,word.getId());
+        startActivityForResult(intent,UPDATE_WORD_ACTIVITY_REQUEST_CODE);
     }
 }

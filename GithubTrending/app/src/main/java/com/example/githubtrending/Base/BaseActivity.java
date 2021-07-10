@@ -38,4 +38,5 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public abstract void destroy();
+
 }

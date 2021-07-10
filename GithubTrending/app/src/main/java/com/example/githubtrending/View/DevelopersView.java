@@ -1,10 +1,12 @@
 package com.example.githubtrending.View;
 
-import com.example.githubtrending.ListBean;
+import android.view.View;
+
+import com.example.githubtrending.Bean;
 
 import java.util.List;
 
-public interface DevelopersView extends View{
-    void success(List<ListBean> listBeans);
+public interface DevelopersView{
+    void success(List<Bean> beans);
     void onError(String result);
 }

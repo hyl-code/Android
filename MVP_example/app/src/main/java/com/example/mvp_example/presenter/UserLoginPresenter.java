@@ -10,9 +10,9 @@ import com.example.mvp_example.model.OnLoginListener;
 
 public class UserLoginPresenter {
 
-    private IUserModel iUserModel;
-    private IUserView iUserView;
-    private Handler mHandler = new Handler();
+    private final IUserModel iUserModel;
+    private final IUserView iUserView;
+    private final Handler mHandler = new Handler();
 
     public UserLoginPresenter(IUserView iUserView){
         this.iUserView = iUserView;

@@ -34,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private Button mZero;
     private Button mClean;
     private ImageButton mBackspace;
-    private Button mLeft;
-    private Button mRight;
+    //private Button mLeft;
+    //private Button mRight;
+    private Button mPercent;
     private Button mDivide;
     private Button mMultiply;
     private Button mSub;
@@ -106,11 +107,14 @@ public class MainActivity extends AppCompatActivity {
         mDot = findViewById(R.id.point);
         mDot.setOnClickListener(listener);
 
-        mLeft = findViewById(R.id.left);
+        /*mLeft = findViewById(R.id.left);
         mLeft.setOnClickListener(listener);
 
         mRight = findViewById(R.id.right);
-        mRight.setOnClickListener(listener);
+        mRight.setOnClickListener(listener);*/
+
+        mPercent = findViewById(R.id.percent_image);
+        mPercent.setOnClickListener(listener);
 
         mResult = findViewById(R.id.result);
         mProgress = findViewById(R.id.progress);
@@ -177,14 +181,14 @@ public class MainActivity extends AppCompatActivity {
                     text = text + ".";
                     mProgress.setText(text);
                     break;
-                case R.id.left:
+                /*case R.id.left:
                     text  = text + "(";
                     mProgress.setText(text);
                     break;
                 case R.id.right:
                     text = text + ")";
                     mProgress.setText(text);
-                    break;
+                    break;*/
                 case R.id.clean:
                     text = "";
                     mProgress.setText("0");
@@ -217,6 +221,14 @@ public class MainActivity extends AppCompatActivity {
                     text = text +  "+";
                     mProgress.setText(text);
                     break;
+                case R.id.percent_image:
+                    if(text != "") {
+                        text = text + "×0.01";
+                        mProgress.setText(text);
+                    }else{
+                        mProgress.setText("0");
+                    }
+                    break;
                 case R.id.equal:
                     res = result(text);
                     String end = String.valueOf(res);
@@ -244,28 +256,32 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void priority(String s){
+    /*public void priority(String s){
         double sec;
-        String s1;
 
-        s1 = s.substring(s.lastIndexOf('(') , s.indexOf(')'));
+        String s1 = s.substring(s.lastIndexOf('(') , s.indexOf(')'));
         String s2 = s.substring(s.lastIndexOf('(') + 1, s.indexOf(')') - 1);
         sec = calculate(s2);
         s = s.replace(s1, sec + "");
-    }
+    }*/
 
 
     public Double result(String s){
         double total;
-        int i;
+        /*int i;
         a:
         for(i = s.indexOf('('); i <= s.lastIndexOf('('); i++) {
             if (!s.contains("(") && !s.contains(")")){
                 break a;
             }else {
-                priority(s);
+                double sec;
+
+                String s1 = s.substring(s.lastIndexOf('(') , s.indexOf(')'));
+                String s2 = s.substring(s.lastIndexOf('(') + 1, s.indexOf(')') - 1);
+                sec = calculate(s2);
+                s = s.replace(s1, sec + "");
             }
-        }
+        }*/
         total = calculate(s);
         return total;
     }

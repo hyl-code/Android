@@ -74,30 +74,25 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="10dp" />
 
+            <ImageButton
+                android:id="@+id/backspace"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="18dp"
+                android:background="@drawable/backspace" />
+
             <Button
-                android:id="@+id/left"
+                android:id="@+id/percent_image"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
-                android:text="@string/left"
+                android:text="@string/percent"
                 android:textSize="40sp"
-                android:textColor="@color/black"
+                android:textColor="@color/orange"
                 android:gravity="center"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_marginStart="20dp" />
-
-            <Button
-                android:id="@+id/right"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/right"
-                android:textColor="@color/black"
-                android:layout_margin="20dp"
-                android:textSize="40sp" />
-
+                android:layout_marginStart="22dp"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/divide"
@@ -305,13 +300,16 @@
             android:layout_height="90dp"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/backspace"
-                android:layout_width="80dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="18dp"
-                android:background="@drawable/backspace" />
+            <Button
+                android:id="@+id/space"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:textSize="45sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginStart="22dp"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/zero"

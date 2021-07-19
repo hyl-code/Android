@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mZero;
     private Button mClean;
     private ImageButton mBackspace;
-    private Button mPercent;
+    private Button mLeft;
+    private Button mRight;
     private Button mDivide;
     private Button mMultiply;
     private Button mSub;
@@ -87,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
         mBackspace = findViewById(R.id.backspace);
         mBackspace.setOnClickListener(listener);
 
-        mPercent = findViewById(R.id.mPercent);
-        mPercent.setOnClickListener(listener);
-
         mDivide = findViewById(R.id.divide);
         mDivide.setOnClickListener(listener);
 
@@ -108,10 +106,27 @@ public class MainActivity extends AppCompatActivity {
         mDot = findViewById(R.id.point);
         mDot.setOnClickListener(listener);
 
+        mLeft = findViewById(R.id.left);
+        mLeft.setOnClickListener(listener);
+
+        mRight = findViewById(R.id.right);
+        mRight.setOnClickListener(listener);
+
         mResult = findViewById(R.id.result);
         mProgress = findViewById(R.id.progress);
 
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
     }
 
     private View.OnClickListener listener = new View.OnClickListener() {
@@ -159,14 +174,23 @@ public class MainActivity extends AppCompatActivity {
                     mProgress.setText(text);
                     break;
                 case R.id.point:
-                    if(!text.contains("."))
-                        text = text + ".";
+                    text = text + ".";
+                    mProgress.setText(text);
+                    break;
+                case R.id.left:
+                    text  = text + "(";
+                    mProgress.setText(text);
+                    break;
+                case R.id.right:
+                    text = text + ")";
                     mProgress.setText(text);
                     break;
                 case R.id.clean:
                     text = "";
                     mProgress.setText("0");
                     mResult.setText(text);
+                    mBackspace.setEnabled(true);
+                    mEqual.setEnabled(true);
                     break;
                 case R.id.backspace:
                     if(text.length() == 1){
@@ -176,10 +200,6 @@ public class MainActivity extends AppCompatActivity {
                         text = text.substring(0,text.length() - 1);
                         mProgress.setText(text);
                     }
-                    break;
-                case R.id.mPercent:
-                    text = text +  "×0.01";
-                    mProgress.setText(text);
                     break;
                 case R.id.divide:
                     text = text +  "÷";
@@ -199,31 +219,74 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.equal:
                     res = result(text);
-                    mResult.setText(String.valueOf(res));
+                    String end = String.valueOf(res);
+                    if(end.contains(".")) {
+                        int a = end.indexOf('.');
+                        int count = 0;
+                        for (int i = a; i < end.length(); i++) {
+                            if (end.charAt(i) == '0') {
+                                count++;
+                            } else {
+                                count = 0;
+                            }
+                        }
+                        if (count != 0) {
+                            end = end.substring(0, a + count - 1);
+
+                        }
+                    }
+                    mResult.setText(end);
                     text = "";
                     mBackspace.setEnabled(false);
+                    mEqual.setEnabled(false);
                     break;
             }
         }
     };
 
-    public double result(String s){
-        // 分割字符然后放进数据
+    public void priority(String s){
+        double sec;
+        String s1;
+
+        s1 = s.substring(s.lastIndexOf('(') , s.indexOf(')'));
+        String s2 = s.substring(s.lastIndexOf('(') + 1, s.indexOf(')') - 1);
+        sec = calculate(s2);
+        s = s.replace(s1, sec + "");
+    }
+
+
+    public Double result(String s){
+        double total;
+        int i;
+        a:
+        for(i = s.indexOf('('); i <= s.lastIndexOf('('); i++) {
+            if (!s.contains("(") && !s.contains(")")){
+                break a;
+            }else {
+                priority(s);
+            }
+        }
+        total = calculate(s);
+        return total;
+    }
+
+    public Double calculate(String s){
+        //分割字符然后放进数组
         String s1 = s.replace("+", "-");
         String[] str = s1.split("-");
         double total = 0;
-
-        // 遍历数据 先算出乘除结果
-        for(String str1 : str){
-            int count = 1;
-            double part = 1;
-            if(str1.contains("×") || str1.contains("÷")){
-                for(int i = 0; i< str1.length(); i++){
-                    a:for(int j = i + 1; j < str1.length();j++){
+        //遍历数组 把里面的乘除结果算出来
+        for (String str1 : str) {
+            if (str1.contains("×") || str1.contains("÷")) {
+                double part = 0;
+                for (int i = 0; i < str1.length(); ) {
+                    int count = 1;
+                    a:
+                    for (int j = i + 1; j < str1.length(); j++) {
                         char c = str1.charAt(j);
-                        if(c == '×' || c=='÷'){
+                        if (c == '×' || c == '÷') {
                             break a;
-                        }else{
+                        } else {
                             count++;
                         }
                     }
@@ -231,44 +294,45 @@ public class MainActivity extends AppCompatActivity {
                     //将数字截取出来
                     String s2 = str1.substring(i, i + count);
                     double d = Double.parseDouble(s2);
-                    if(i == 0){
+                    if (i == 0) {
                         part = d;
-                    }else{
+                    } else {
                         char c1 = str1.charAt(i - 1);
-                        if(c1 == '×'){
+                        if (c1 == '×') {
                             part *= d;
-                        }else if(c1 == '÷'){
-                            if(d == 0)
-                                return 0;
+                        } else if (c1 == '÷') {
+                            //如果除数为0，直接返回null;
+                            if (d == 0)
+                                return null;
                             part /= d;
                         }
                     }
-                    i += (count + 1);
+                    i += count + 1;
                 }
                 s = s.replace(str1, part + "");
             }
         }
-
-        // 再进行加减运算
-        for(int i = 0; i < s.length(); i++){
+        //进行加减运算
+        for (int i = 0; i < s.length(); i++) {
             int count = 1;
-            a:for(int j = i + 1; j < s.length(); i++){
+            a:
+            for (int j = i + 1; j < s.length(); j++) {
                 char c = s.charAt(j);
-                if(c == '+' || c == '-'){
+                if (c == '+' || c == '-') {
                     break a;
-                }else{
+                } else {
                     count++;
                 }
             }
             String s3 = s.substring(i, i + count);
             double d2 = Double.parseDouble(s3);
-            if(i == 0){
+            if (i == 0) {
                 total = d2;
-            }else{
-                char c = s.charAt(i-1);
-                if(c == '+'){
+            } else {
+                char c = s.charAt(i - 1);
+                if (c == '+') {
                     total += d2;
-                }else if(c == '-'){
+                } else if (c == '-') {
                     total -= d2;
                 }
             }
@@ -276,6 +340,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return total;
     }
+
 
 
     protected void setStatusBar() {

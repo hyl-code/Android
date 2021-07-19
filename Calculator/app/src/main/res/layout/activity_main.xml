@@ -32,7 +32,7 @@
         android:text="@string/space"
         android:textSize="50sp"
         android:gravity="end"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/black"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="15dp" />
 
@@ -42,7 +42,7 @@
         android:layout_height="80dp"
         android:text="@string/zero"
         android:textSize="50sp"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/black"
         android:gravity="end"
         android:layout_marginEnd="15dp" />
 
@@ -74,26 +74,30 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="10dp" />
 
-            <ImageButton
-                android:id="@+id/backspace"
-                android:layout_width="80dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/backspace"
-                android:layout_marginStart="10dp" />
-
             <Button
-                android:id="@+id/mPercent"
+                android:id="@+id/left"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
-                android:text="@string/mod"
-                android:textStyle="bold"
+                android:text="@string/left"
                 android:textSize="40sp"
-                android:textColor="@color/orange"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_marginStart="28dp" />
+                android:layout_marginStart="20dp" />
+
+            <Button
+                android:id="@+id/right"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/right"
+                android:textColor="@color/black"
+                android:layout_margin="20dp"
+                android:textSize="40sp" />
+
 
             <Button
                 android:id="@+id/divide"
@@ -104,8 +108,9 @@
                 android:textSize="40sp"
                 android:textColor="@color/orange"
                 android:gravity="center"
-                android:layout_margin="28dp"
+                android:layout_marginStart="20dp"
                 style="?android:attr/buttonBarButtonStyle" />
+
 
         </LinearLayout>
 
@@ -126,7 +131,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/seven"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="22dp" />
@@ -138,7 +143,7 @@
                 android:layout_gravity="center"
                 android:text="@string/eight"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="28dp" />
@@ -150,7 +155,7 @@
                 android:layout_gravity="center"
                 android:text="@string/nine"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="28dp" />
@@ -186,7 +191,7 @@
                 android:layout_gravity="center"
                 android:text="@string/four"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="22dp" />
@@ -198,7 +203,7 @@
                 android:layout_gravity="center"
                 android:text="@string/five"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="28dp" />
@@ -210,7 +215,7 @@
                 android:layout_gravity="center"
                 android:text="@string/six"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="28dp" />
@@ -247,7 +252,7 @@
                 android:layout_gravity="center"
                 android:text="@string/one"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="22dp" />
@@ -259,7 +264,7 @@
                 android:layout_gravity="center"
                 android:text="@string/two"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="28dp" />
@@ -271,7 +276,7 @@
                 android:layout_gravity="center"
                 android:text="@string/three"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_marginStart="28dp" />
@@ -300,12 +305,13 @@
             android:layout_height="90dp"
             android:orientation="horizontal">
 
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_marginStart="22dp" />
+            <ImageButton
+                android:id="@+id/backspace"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="18dp"
+                android:background="@drawable/backspace" />
 
             <Button
                 android:id="@+id/zero"
@@ -314,9 +320,9 @@
                 android:layout_gravity="center"
                 android:text="@string/zero"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="22dp"
                 style="?android:attr/buttonBarButtonStyle" />
 
             <Button
@@ -326,7 +332,7 @@
                 android:layout_gravity="center"
                 android:text="@string/dot"
                 android:textSize="45sp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:layout_marginStart="28dp"
                 style="?android:attr/buttonBarButtonStyle" />
@@ -344,7 +350,6 @@
                 style="?android:attr/buttonBarButtonStyle" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

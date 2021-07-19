@@ -19,4 +19,6 @@
     <string name="add">+</string>
     <string name="dot">.</string>
     <string name="equal">=</string>
+    <string name="left">(</string>
+    <string name="right">)</string>
 </resources>

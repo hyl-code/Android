@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
         /*mLeft = findViewById(R.id.left);
         mLeft.setOnClickListener(listener);
-
         mRight = findViewById(R.id.right);
         mRight.setOnClickListener(listener);*/
 
@@ -140,55 +139,58 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.one :
                     text = text + String.valueOf(1);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.two :
                     text = text + String.valueOf(2);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.three :
                     text = text + String.valueOf(3);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.four :
                     text = text +  String.valueOf(4);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.five :
                     text = text +  String.valueOf(5);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.six:
                     text = text +  String.valueOf(6);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.seven:
                     text = text +  String.valueOf(7);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.eight:
                     text = text +  String.valueOf(8);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.nine:
                     text = text +  String.valueOf(9);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.zero:
                     text = text + String.valueOf(0);
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.point:
                     text = text + ".";
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
-                /*case R.id.left:
-                    text  = text + "(";
-                    mProgress.setText(text);
-                    break;
-                case R.id.right:
-                    text = text + ")";
-                    mProgress.setText(text);
-                    break;*/
                 case R.id.clean:
                     text = "";
                     mProgress.setText("0");
@@ -200,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                     if(text.length() == 1){
                         text = "";
                         mProgress.setText("0");
+                        mBackspace.setEnabled(false);
                     }else{
                         text = text.substring(0,text.length() - 1);
                         mProgress.setText(text);
@@ -208,20 +211,25 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.divide:
                     text = text +  "÷";
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.multiply:
                     text = text + "×";
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.subtract:
                     text = text +  "-";
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.add:
                     text = text +  "+";
                     mProgress.setText(text);
+                    mBackspace.setEnabled(true);
                     break;
                 case R.id.percent_image:
+                    mBackspace.setEnabled(true);
                     if(text != "") {
                         text = text + "×0.01";
                         mProgress.setText(text);
@@ -258,7 +266,6 @@ public class MainActivity extends AppCompatActivity {
 
     /*public void priority(String s){
         double sec;
-
         String s1 = s.substring(s.lastIndexOf('(') , s.indexOf(')'));
         String s2 = s.substring(s.lastIndexOf('(') + 1, s.indexOf(')') - 1);
         sec = calculate(s2);
@@ -275,7 +282,6 @@ public class MainActivity extends AppCompatActivity {
                 break a;
             }else {
                 double sec;
-
                 String s1 = s.substring(s.lastIndexOf('(') , s.indexOf(')'));
                 String s2 = s.substring(s.lastIndexOf('(') + 1, s.indexOf(')') - 1);
                 sec = calculate(s2);

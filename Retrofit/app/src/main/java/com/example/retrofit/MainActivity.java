@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<Bean> call, Throwable t) {
-
+                Toast.makeText(MainActivity.this, "查找失败 不存在", Toast.LENGTH_SHORT).show();
             }
         });
     }
